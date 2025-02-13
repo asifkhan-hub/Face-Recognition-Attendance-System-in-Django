@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <!-- Include any necessary CSS -->
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .student-details {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-bottom: 30px;
+        }
+        .detail {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .actions a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Details</h1>
+        <div class="student-details">
+            <div class="detail"><strong>Name:</strong> {{ student.name }}</div>
+            <div class="detail"><strong>Email:</strong> {{ student.email }}</div>
+            <div class="detail"><strong>Phone Number:</strong> {{ student.phone_number }}</div>
+            <div class="detail"><strong>Class:</strong> {{ student.student_class }}</div>
+            <div class="detail"><strong>Authorized:</strong> {% if student.authorized %} Yes {% else %} No {% endif %}</div>
+        </div>
+        <div class="actions">
+            <a href="{% url 'student-list' %}">Back to List</a>
+            <a href="{% url 'student-authorize' pk=student.pk %}">Authorize</a>
+            <a href="{% url 'student-delete' pk=student.pk %}">Delete</a> <!-- Add this line -->
+        </div>
+    </div>
+</body>
+</html>

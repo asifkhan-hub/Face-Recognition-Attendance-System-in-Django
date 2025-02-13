@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Configurations List</title>
+
+    <!-- Google Fonts for nice typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS for styling the table and layout -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #FFD700; /* Yellow text */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top */
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #000000; /* Black background */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent black background */
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #FFD700; /* Yellow text */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1a1a1a; /* Dark background for the table */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #6c757d; /* Grey header */
+            color: #fff;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        td {
+            font-weight: 400;
+            border-bottom: 1px solid #333;
+            color: #FFD700; /* Yellow text */
+        }
+
+        .create-new-btn, .back-home-btn {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 20px;
+            background-color: #FFD700; /* Yellow button */
+            color: #000; /* Black text for contrast */
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .create-new-btn:hover {
+            background-color: #FFC107; /* Darker yellow on hover */
+        }
+
+        .back-home-btn {
+            background-color: #FFD700; /* Same yellow button */
+        }
+
+        .back-home-btn:hover {
+            background-color: #FFC107; /* Darker yellow on hover */
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Saved Camera Configurations</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Camera Source</th>
+                    <th>Threshold</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for config in configs %}
+                <tr>
+                    <td>{{ config.name }}</td>
+                    <td>{{ config.camera_source }}</td>
+                    <td>{{ config.threshold }}</td>
+                    <td>
+                        <a href="{% url 'camera_config_update' config.id %}" style="color: #FFD700;">Edit</a> |
+                        <a href="{% url 'camera_config_delete' config.id %}" style="color: #FFD700;">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'camera_config_create' %}" class="create-new-btn">Create New Configuration</a>
+        <a href="{% url 'home' %}" class="back-home-btn">Back to Home</a> <!-- New Back to Home button -->
+    </div>
+
+</body>
+</html>

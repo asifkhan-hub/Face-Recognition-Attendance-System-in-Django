@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Student Confirmation</title>
+    <style>
+        /* Add your styles here */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #dc3545; /* Red color for danger */
+        }
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .actions a, .actions button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .actions a {
+            background-color: #007bff; /* Primary color */
+        }
+        .actions button {
+            background-color: #dc3545; /* Danger color */
+        }
+        .actions a:hover, .actions button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Student</h1>
+        <p>Are you sure you want to delete {{ student.name }}?</p>
+        <div class="actions">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+                <a href="{% url 'student-detail' student.pk %}">Cancel</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

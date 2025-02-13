@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Camera Configuration</title>
+
+    <!-- Google Fonts for Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Styling -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #444;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        button, a {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        button {
+            background-color: #dc3545;
+            color: #fff;
+            border: 1px solid #dc3545;
+        }
+
+        button:hover {
+            background-color: #c82333;
+        }
+
+        a {
+            background-color: #6c757d;
+            color: #fff;
+            display: inline-block;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #5a6268;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            button, a {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Delete Camera Configuration</h1>
+        <p>Are you sure you want to delete "<strong>{{ config.name }}</strong>"?</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="button-container">
+                <button type="submit">Yes, Delete</button>
+                <a href="{% url 'camera_config_list' %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

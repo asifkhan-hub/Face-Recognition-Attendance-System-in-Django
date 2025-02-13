@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student Attendance List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Font Awesome -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .table-responsive {
+            margin-top: 20px;
+            flex-grow: 1;
+        }
+        .table thead th {
+            vertical-align: middle;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+        }
+        .table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .heading {
+            text-align: center;
+            margin: 40px 0;
+            color: #007bff;
+        }
+        .footer {
+            margin-top: auto;
+            padding: 10px 0;
+            text-align: left;
+        }
+        .back-icon {
+            padding: 10px;
+            font-size: 1.5em;
+            color: #007bff;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .back-icon:hover {
+            color: #0056b3;
+        }
+        .form-inline .form-control {
+            width: auto;
+            flex: 1 1 auto;
+        }
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .filter-container .input-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .filter-container .input-group:last-child {
+            margin-right: 0;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="heading">Student Attendance Records</h2>
+    <form method="get" class="filter-container">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search for students..." value="{{ search_query }}">
+            <div class="input-group-append">
+                <button class="btn btn-custom" type="submit"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+        <div class="input-group">
+            <input type="date" name="attendance_date" class="form-control" value="{{ date_filter }}">
+            <div class="input-group-append">
+                <button class="btn btn-custom" type="submit"><i class="fas fa-calendar-alt"></i> Filter</button>
+            </div>
+        </div>
+    </form>
+    
+    <!-- Attendance Table -->
+    <div class="table-responsive attendance-table">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Student Image</th>
+                    <th>Student Name</th>
+                    <th>Attendance Date</th>
+                    <th>Check-in Time</th>
+                    <th>Check-out Time</th>
+                    <th>Stayed Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in student_attendance_data %}
+                    {% for attendance in data.attendance_records %}
+                    <tr>
+                        <td>
+                            {% if data.student.image %}
+                                <img src="{{ data.student.image.url }}" alt="{{ data.student.name }}" style="width: 50px; height: 50px; border-radius: 50%;">
+                            {% else %}
+                                No Image
+                            {% endif %}
+                        </td>
+                        <td>{{ data.student.name }}</td>
+                        <td>{{ attendance.date }}</td>
+                        <td>{{ attendance.check_in_time|date:"h:i:s A" }}</td>
+                        <td>{{ attendance.check_out_time|date:"h:i:s A" }}</td>
+                        <td>
+                            {% if attendance.check_in_time and attendance.check_out_time %}
+                                {{ attendance.calculate_duration }}
+                            {% else %}
+                                Not Checked Out
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <i class="fas fa-arrow-left back-icon" onclick="location.href='/'"></i> <!-- Font Awesome back icon -->
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

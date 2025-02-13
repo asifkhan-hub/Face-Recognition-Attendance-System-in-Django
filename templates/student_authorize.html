@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authorize Student</title>
+    <!-- Include any necessary CSS or external libraries -->
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .student-details {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-bottom: 30px;
+        }
+        .detail {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #777;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .actions a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            color: #007bff;
+            text-decoration: none;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .actions a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Authorize Student</h1>
+        <div class="student-details">
+            <div class="detail"><strong>Name:</strong> {{ student.name }}</div>
+            <div class="detail"><strong>Email:</strong> {{ student.email }}</div>
+            <div class="detail"><strong>Phone Number:</strong> {{ student.phone_number }}</div>
+            <div class="detail"><strong>Class:</strong> {{ student.student_class }}</div>
+            <div class="detail"><strong>Authorized:</strong> {% if student.authorized %} Yes {% else %} No {% endif %}</div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="checkbox" id="authorized" name="authorized" {% if student.authorized %} checked {% endif %}>
+                <label for="authorized">Authorize Student</label>
+            </div>
+            <button type="submit">Update Authorization</button>
+        </form>
+        <div class="actions">
+            <a href="{% url 'student-list' %}">Back to List</a>
+            <a href="{% url 'student-detail' pk=student.pk %}">View Details</a>
+        </div>
+    </div>
+</body>
+</html>

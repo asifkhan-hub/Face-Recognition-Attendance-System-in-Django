@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Success</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            position: relative;
+            min-height: 100vh; /* Ensure full viewport height */
+        }
+        .container {
+            margin-top: 50px;
+            position: relative;
+            z-index: 1; /* Ensure content is above footer */
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            padding: 40px;
+        }
+        .card-title {
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+        .card-subtitle {
+            font-size: 1.5rem;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+        .start-recognition {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .start-recognition:hover {
+            background-color: #0056b3;
+        }
+        /* Footer styles */
+        .footer {
+            color: #6c757d;
+            font-size: 24px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .footer i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h2 class="card-title">Registered Successfully!</h2>
+                        <h3 class="card-subtitle">Please Wait For Admin Approval</h3>
+                        <div class="footer" onclick="location.href='{% url 'home' %}'">
+                            <i class="fas fa-home"></i> Back to Home
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

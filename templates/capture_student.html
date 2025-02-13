@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Arial', sans-serif;
+            color: #343a40;
+        }
+
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+            border: 5px solid #28a745;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .image-preview {
+            display: none;
+            margin-top: 15px;
+            border-radius: 1rem;
+            border: 1px solid #ced4da;
+            max-width: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons i {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            color: #6c757d;
+        }
+
+        .social-icons i:hover {
+            color: #28a745;
+            transition: color 0.3s;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #28a745;
+            cursor: pointer;
+        }
+
+        .back-button i {
+            margin-right: 5px;
+        }
+
+        .back-button:hover {
+            color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h2 class="card-title">Student Registration</h2>
+                <video id="video" autoplay></video>
+                <form id="registrationForm" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number">Phone Number:</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student_class">Class:</label>
+                        <input type="text" class="form-control" id="student_class" name="student_class" required>
+                    </div>
+
+                    <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+                    <input type="hidden" id="image_data" name="image_data">
+                    <img id="imagePreview" class="image-preview" src="" alt="Captured Image Preview" />
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success" id="submitBtn">Submit Registration</button>
+                    </div>
+                    <div class="back-button" onclick="location.href='{% url 'home' %}'">
+                        <i class="fas fa-home"></i> Back to Home
+                    </div>
+                </form>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const imageDataInput = document.getElementById('image_data');
+        const registrationForm = document.getElementById('registrationForm');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // Access the webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(err => {
+                console.error("Error accessing the camera: ", err);
+            });
+
+        // Capture the image when the form is submitted
+        registrationForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/jpeg');
+            imageDataInput.value = dataURL;
+
+            // Show the captured image preview
+            imagePreview.src = dataURL;
+            imagePreview.style.display = 'block';
+
+            // Submit the form programmatically
+            registrationForm.submit();
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
